@@ -33,13 +33,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildFeedRow(FeedModel data) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
-      child: Column(
+      child: Row(
         children: <Widget>[
-          Text(
-            data.title,
-            style: TextStyle(fontWeight: FontWeight.bold),
+          Image.network(
+            data.imageHref != null ? data.imageHref : '',
+            width: 40,
+            height: 40,
           ),
-          Text(data.summary),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.fromLTRB(0, 6.0, 0, 26.0),
+                child: Text(
+                  data.title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                ),
+              ),
+              Text(
+                data.originTitle,
+                style: TextStyle(fontSize: 10, color: Colors.grey),
+              )
+            ],
+          )
         ],
       ),
     );
