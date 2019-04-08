@@ -8,6 +8,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _getFeeds() async {
     final _list = await getStreamFeeds(context);
+
+    print(_list.length);
     setState(() {
       list = _list;
     });
@@ -18,11 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
       return Text('加载中...');
     } else {
       return ListView.builder(
-          itemCount: list.length - 1,
+          itemCount: list.length,
           itemBuilder: (context, i) {
-            if (i.isOdd) return Divider();
             if (list.length > 0) {
-              return _buildFeedRow(list[i]);
+              return _buildFeedRow(list[i], i);
             } else {
               return null;
             }
@@ -30,33 +31,44 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget _buildFeedRow(FeedModel data) {
+  Widget _buildFeedRow(FeedModel data, num i) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 10.0),
-      child: Row(
-        children: <Widget>[
-          Image.network(
-            data.imageHref != null ? data.imageHref : '',
-            width: 40,
-            height: 40,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 6.0, 0, 26.0),
-                child: Text(
-                  data.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                ),
-              ),
-              Text(
-                data.originTitle,
-                style: TextStyle(fontSize: 10, color: Colors.grey),
-              )
-            ],
-          )
-        ],
+      padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 4.0),
+      child: Card(
+        child: Row(
+          children: <Widget>[
+            Image.network(
+              data.imageHref != null ? data.imageHref : '',
+              width: 40,
+              height: 40,
+            ),
+            Column(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.fromLTRB(4.0, 10.0, 0, 10.0),
+                      child: Text(
+                        data.title,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 6.0, horizontal: 4.0),
+                      child: Text(
+                        data.originTitle,
+                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -84,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         padding: EdgeInsets.all(12.0),
         child: _buildWidget(),
-//        child: Text('yyy'),
       ),
     );
   }
