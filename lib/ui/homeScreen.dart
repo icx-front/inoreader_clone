@@ -35,39 +35,46 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 6.0, horizontal: 4.0),
       child: Card(
-        child: Row(
-          children: <Widget>[
-            Image.network(
-              data.imageHref != null ? data.imageHref : '',
-              width: 40,
-              height: 40,
-            ),
-            Column(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.fromLTRB(4.0, 10.0, 0, 10.0),
-                      child: Text(
-                        data.title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14),
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(100),
+          onTap: () {
+            Navigator.pushNamed(context, '/detail',
+                arguments: data.originTitle);
+          }, // tap to load origin content with url
+          child: Row(
+            children: <Widget>[
+              Image.network(
+                data.imageHref != null ? data.imageHref : '',
+                width: 40,
+                height: 40,
+              ),
+              Column(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.fromLTRB(4.0, 10.0, 0, 10.0),
+                        child: Text(
+                          data.title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 6.0, horizontal: 4.0),
-                      child: Text(
-                        data.originTitle,
-                        style: TextStyle(fontSize: 10, color: Colors.grey),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 6.0, horizontal: 4.0),
+                        child: Text(
+                          data.originTitle,
+                          style: TextStyle(fontSize: 10, color: Colors.grey),
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
-            )
-          ],
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
