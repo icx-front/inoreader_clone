@@ -15,7 +15,7 @@ void main() {
       '/login': (context) => LoginScreen(),
       '/home': (context) => HomeScreen(),
       '/feed': (context) => FeedScreen(),
-      '/detail': (context) => PageDetailScreen(),
+//      '/detail': (context) => PageDetailScreen(),
     },
   ));
 }

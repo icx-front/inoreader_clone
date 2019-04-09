@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inoreader_clone_icx/ui/homeSIder.dart';
+import 'package:inoreader_clone_icx/ui/showPageDetail.dart';
 import 'package:inoreader_clone_icx/common/apiFunctions/streamListApi.dart';
 import 'package:inoreader_clone_icx/model/json/feedItemModel.dart';
 
@@ -38,8 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: InkWell(
           splashColor: Colors.blue.withAlpha(100),
           onTap: () {
-            Navigator.pushNamed(context, '/detail',
-                arguments: data.originTitle);
+//            Navigator.pushNamed(context, '/detail',
+//                arguments: data.originTitle);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        PageDetailScreen(summary: data.summary)));
           }, // tap to load origin content with url
           child: Row(
             children: <Widget>[
