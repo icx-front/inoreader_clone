@@ -23,6 +23,8 @@ Future<LoginModel> requestLoginApi(
 
   final response = await http.post(url, body: body);
 
+  print(response.statusCode);
+
   if (response.statusCode == 200) {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var body = response.body;
