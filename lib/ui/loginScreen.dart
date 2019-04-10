@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:inoreader_clone_icx/common/apiFunctions/requestLoginApi.dart';
 import 'package:inoreader_clone_icx/common/util/showDialog.dart';
 import 'package:inoreader_clone_icx/ui/authLoginScreen.dart';
+import 'package:inoreader_clone_icx/common/localServer/RedirectWidget.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -50,11 +51,18 @@ class LoginScreenState extends State<LoginScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Center(
-            child: Image.asset('images/logo.jpg', width: 100, height: 100,),
+            child: Image.asset(
+              'images/logo.jpg',
+              width: 100,
+              height: 100,
+            ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(10, 8, 0, 2),
-            child: Text('Email', style: TextStyle(fontSize: 16),),
+            child: Text(
+              'Email',
+              style: TextStyle(fontSize: 16),
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(10),
@@ -67,7 +75,10 @@ class LoginScreenState extends State<LoginScreen> {
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(10, 8, 0, 2),
-            child: Text('Password', style: TextStyle(fontSize: 16),),
+            child: Text(
+              'Password',
+              style: TextStyle(fontSize: 16),
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
@@ -81,29 +92,30 @@ class LoginScreenState extends State<LoginScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 6.0),
-              child: Center(
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(20, 4, 20, 4),
-                  height: 45,
-                  width: double.infinity,
-                    child: FlatButton(
-                      onPressed: login,
-                      child: Text('登陆', style: TextStyle( fontSize: 18, color: Colors.white)),
-                      color: Colors.blue[500],
-                    ),
+            child: Center(
+              child: Container(
+                margin: EdgeInsets.fromLTRB(20, 4, 20, 4),
+                height: 45,
+                width: double.infinity,
+                child: FlatButton(
+                  onPressed: login,
+                  child: Text('登陆',
+                      style: TextStyle(fontSize: 18, color: Colors.white)),
+                  color: Colors.blue[500],
                 ),
+              ),
             ),
           ),
-            InkWell(
-              child: Text('Inoreader'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AuthLoginScreen(uri: 'https://www.baidu.com')
-                  )
-                );
-              },
+          InkWell(
+            child: Text('Inoreader'),
+//            onTap: () {
+//              Navigator.push(
+//                  context,
+//                  MaterialPageRoute(
+//                      builder: (context) =>
+//                          AuthLoginScreen(uri: 'https://www.baidu.com')));
+//            },
+            onTap: getToken,
           )
         ],
       ),

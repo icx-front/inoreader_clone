@@ -4,6 +4,8 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:inoreader_clone_icx/model/json/tokenModel.dart';
+import 'package:inoreader_clone_icx/constant/constants.dart';
 
 _launchURL(String url) async {
   if (await canLaunch(url)) {
@@ -29,4 +31,34 @@ Future<Stream<String>> _server() async {
     await onCode.close();
   });
   return onCode.stream;
+}
+
+Future<Token> getToken() async {
+  Stream<String> onCode = await _server();
+
+  _launchURL(AUTH_URL);
+
+  // get code from auth
+  final String code = await onCode.first;
+
+  // prepare post data and headers
+  Map<String, dynamic> body = {
+    'code': code,
+    'client_id': '',
+    'client_secret': '',
+    'scope': '',
+    'grant_type': 'authorization_code',
+  };
+  Map<String, String> header = {
+    'Content-type': 'application/x-www-form-urlencoded',
+  };
+
+  // post data to exchange token
+  try {
+    final response = await http.post(TOKEN_URL, headers: header, body: body);
+    print(response);
+  } catch (e) {
+    print(e);
+  }
+  return null;
 }
