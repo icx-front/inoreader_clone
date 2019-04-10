@@ -30,7 +30,7 @@ class SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Center(
-      child: Image.asset('images/logo.jpg', fit: BoxFit.cover,),
+      child: Image.asset('images/splash.jpg', fit: BoxFit.cover,),
     );
   }
 }

@@ -38,7 +38,6 @@ class _PageDetailState extends State<PageDetailScreen> {
         title: Text('详情页'),
       ),
       body: WebView(
-//        initialUrl: 'https://main.icarbonx.com/surveys/226',
         initialUrl:
             Uri.dataFromString(summary, mimeType: 'text/html').toString(),
         javascriptMode: JavascriptMode.unrestricted,

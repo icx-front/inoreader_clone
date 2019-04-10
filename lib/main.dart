@@ -3,7 +3,7 @@ import 'ui/splashScreen.dart';
 import 'ui/loginScreen.dart';
 import 'ui/homeScreen.dart';
 import 'ui/feedScreen.dart';
-import 'ui/showPageDetail.dart';
+
 
 void main() {
   runApp(MaterialApp(
@@ -15,7 +15,6 @@ void main() {
       '/login': (context) => LoginScreen(),
       '/home': (context) => HomeScreen(),
       '/feed': (context) => FeedScreen(),
-//      '/detail': (context) => PageDetailScreen(),
     },
   ));
 }

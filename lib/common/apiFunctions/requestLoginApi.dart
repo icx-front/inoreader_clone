@@ -21,25 +21,27 @@ Future<LoginModel> requestLoginApi(
 
 //  nqSy4uGa8c4V9CL
 
-  final response = await http.post(url, body: body);
+  try {
+    final response = await http.post(url, body: body);
 
-  print(response.statusCode);
+    if (response.statusCode == 200) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var body = response.body;
+      if (body is String) {
+        body.split(' ').map((item) {
+          var _item = item.split('=');
+          result['token'] = _item[_item.length - 1];
+        }).toList();
 
-  if (response.statusCode == 200) {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var body = response.body;
-    if (body is String) {
-      body.split(' ').map((item) {
-        var _item = item.split('=');
-        result['token'] = _item[_item.length - 1];
-      }).toList();
-
-      await prefs.setString('token', result['token']);
-      await prefs.setString('email', result['email']);
+        await prefs.setString('token', result['token']);
+        await prefs.setString('email', result['email']);
+      }
+      Navigator.pushNamed(context, '/feed');
+      return LoginModel(email, result['token'], 0);
+    } else {
+      return LoginModel('', '', -1);
     }
-    Navigator.pushNamed(context, '/feed');
-    return LoginModel(email, result['token'], 0);
-  } else {
-    return null;
+  } catch (e) {
+    print(e.toString());
   }
 }
