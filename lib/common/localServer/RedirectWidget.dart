@@ -9,7 +9,7 @@ import 'package:inoreader_clone_icx/constant/constants.dart';
 
 _launchURL(String url) async {
   if (await canLaunch(url)) {
-    await launch(url);
+    await launch(url, forceWebView: true);
   } else {
     throw 'Could not launch $url';
   }
@@ -23,7 +23,8 @@ Future<Stream<String>> _server() async {
     final String code = request.uri.queryParameters['code'];
     request.response
       ..statusCode = 200
-      ..headers.set('Content-type', ContentType.HTML.mimeType);
+      ..headers.set('Content-type', ContentType.HTML.mimeType)
+      ..write("<html><h1>You can now close this window</h1></html>");
 
     await request.response.close();
     await server.close(force: true);
@@ -44,9 +45,10 @@ Future<Token> getToken() async {
   // prepare post data and headers
   Map<String, dynamic> body = {
     'code': code,
-    'client_id': '',
-    'client_secret': '',
-    'scope': '',
+    'client_id': ID,
+    'client_secret': KEY,
+    'scope': SCOPE_R,
+    'redirect_uri': 'http://localhost:8080',
     'grant_type': 'authorization_code',
   };
   Map<String, String> header = {
@@ -56,9 +58,12 @@ Future<Token> getToken() async {
   // post data to exchange token
   try {
     final response = await http.post(TOKEN_URL, headers: header, body: body);
-    print(response);
+    print(response.body);
+    return Token.fromMap(json.decode(response.body));
   } catch (e) {
     print(e);
+  } finally {
+    closeWebView();
   }
   return null;
 }
