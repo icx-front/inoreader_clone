@@ -58,7 +58,6 @@ Future<Token> getToken() async {
   // post data to exchange token
   try {
     final response = await http.post(TOKEN_URL, headers: header, body: body);
-    print(response.body);
     return Token.fromMap(json.decode(response.body));
   } catch (e) {
     print(e);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,11 +19,15 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   countDownTime() async {
-    print('count down time');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     return Timer(Duration(seconds: splashDuration), () {
-      // force hide the keyboard
-//      SystemChannels.textInput.invokeMethod('TextInput.hide');
-      Navigator.pushNamed(context, '/login');
+      final token = prefs.getString('token');
+      var path = '/login';
+      if (token.isNotEmpty) {
+        path = '/home';
+      }
+      SystemChannels.textInput.invokeMethod('TextInput.hide');
+      Navigator.pushNamed(context, path);
     });
   }
 

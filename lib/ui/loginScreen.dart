@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
 
@@ -23,6 +24,22 @@ class LoginScreenState extends State<LoginScreen> {
       await launch(url, forceSafariVC: true, forceWebView: true);
     } else {
       print('Unable to reach $url');
+    }
+  }
+
+  void _handleAuthLogin () async {
+    final response = await getToken();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString('token', response.accessToken);
+    await prefs.setString('refreshToek', response.refreshToken);
+    await prefs.setDouble('expiresIn', response.expiresIn);
+    await prefs.setString('type', response.type);
+
+    // Navigator to some other path if response success
+    if (response.accessToken.isNotEmpty) {
+      print('go to feed page');
+      Navigator.pushNamed(context, '/feed');
     }
   }
 
@@ -108,14 +125,7 @@ class LoginScreenState extends State<LoginScreen> {
           ),
           InkWell(
             child: Text('Inoreader'),
-//            onTap: () {
-//              Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                      builder: (context) =>
-//                          AuthLoginScreen(uri: 'https://www.baidu.com')));
-//            },
-            onTap: getToken,
+            onTap: _handleAuthLogin,
           )
         ],
       ),
